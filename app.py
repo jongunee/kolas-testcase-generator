@@ -63,7 +63,7 @@ def index():
 
         xml_content = generate_xml(device_info, selected_test_cases, additional_settings)
         response = make_response(xml_content)
-        response.headers["Content-Disposition"] = "attachment; filename=test_configuration.xml"
+        response.headers["Content-Disposition"] = "attachment; filename=deviceConfiguration.xml"
         return response
 
     # 각 테스트 케이스에 대한 설정 파일 존재 여부 확인
