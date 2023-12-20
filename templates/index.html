@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>XML Configuration Generator</title>
+    <style>
+      .additional-settings {
+        display: none;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <form method="post">
+      <div style="float: left; width: 50%">
+        <input type="submit" value="Generate XML" /><br /><br />
+        <button type="button" onclick="selectAll()">Select All</button>
+        <button type="button" onclick="selectKOLASTestCases()">
+          KOLAS Test Case
+        </button>
+        <button
+          type="button"
+          id="selectNecessaryButton"
+          onclick="selectNecessaryTestCases()"
+        >
+          Necessary Test Cases
+        </button>
+        <button type="button" onclick="clearAllChecks()">Clear</button>
+
+        <div>
+          <label>Product Name:</label>
+          <input type="text" name="product_name" /><br />
+          <label>Product Version:</label>
+          <input type="text" name="product_version" /><br />
+          <label>Product Category:</label>
+          <input type="text" name="product_category" /><br />
+          <label>Company Name:</label>
+          <input type="text" name="company_name" /><br />
+          <label>Endpoint:</label>
+          <input type="text" name="endpoint" /><br />
+          <label>Username:</label>
+          <input type="text" name="username" /><br />
+          <label>Password:</label>
+          <input type="password" name="password" /><br />
+        </div>
+
+        <!-- 각 TestUnit에 대한 체크박스 -->
+        {% for group, cases in test_units_data.items() %}
+        <fieldset>
+          <legend>{{ group }}</legend>
+          {% for case in cases %}
+          <label>
+            <input
+              type="checkbox"
+              id="checkbox_{{ case }}"
+              name="{{ group }}"
+              value="{{ case }}"
+              onclick="toggleSettings('{{ case }}')"
+            />
+            {{ case }}
+          </label>
+          <br />
+          {% endfor %}
+        </fieldset>
+        {% endfor %}
+      </div>
+      <!-- 추가 설정 필드 -->
+      <div style="float: right; width: 50%">
+        {% for group, cases in test_units_data.items() %} {% for case in cases
+        %} {% if settings_exists[case] %}
+        <div
+          id="settings_{{ case }}"
+          class="additional-settings"
+          style="display: none"
+        >
+          <h3>Settings for {{ case }}</h3>
+          {% include 'settings/' + case + '.html' %}
+        </div>
+        {% endif %} {% endfor %} {% endfor %}
+      </div>
+      <div style="clear: both"></div>
+    </form>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
