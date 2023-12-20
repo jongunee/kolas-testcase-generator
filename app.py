@@ -124,4 +124,4 @@ def generate_xml(device_info, selected_cases, additional_settings):
     return xml_str
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
