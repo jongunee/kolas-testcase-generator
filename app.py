@@ -38,7 +38,7 @@ test_units_data = {
 def index():
     # 각 테스트 케이스에 대한 설정 파일 존재 여부 확인
     settings_exists = {
-        case: os.path.isfile(f'/home/jongunee/kolas-testcase-generator/templates/settings/{case}.html')
+        case: os.path.isfile(f'templates/settings/{case}.html')
         for group in test_units_data
         for case in test_units_data[group]
     }
@@ -58,7 +58,7 @@ def index():
         selected_test_cases = {group: request.form.getlist(group) for group in test_units_data}
 
         additional_config_test_cases = {
-            group: [case for case in test_units_data[group] if os.path.isfile(f'/home/jongunee/kolas-testcase-generator/templates/settings/{case}.html')]
+            group: [case for case in test_units_data[group] if os.path.isfile(f'templates/settings/{case}.html')]
             for group in test_units_data
         }
 
